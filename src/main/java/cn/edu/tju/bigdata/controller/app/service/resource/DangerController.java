@@ -23,7 +23,7 @@ public class DangerController extends BaseController {
     private DangerMapper dangerMapper;
     @RequestMapping("/list")
     public String listUI(Model model) throws Exception {
-        model.addAttribute("res", findByRes());
+        model.addAttribute("res ", findByRes());
         return Common.BACKGROUND_PATH + "/system/danger/list";
     }
 
