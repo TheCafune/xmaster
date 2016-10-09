@@ -11,6 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/forcast")
 public class ForcastAndPrecaution extends BaseController{
 
-
+ddsd
 
 }
