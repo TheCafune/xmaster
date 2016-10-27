@@ -23,5 +23,14 @@
           order by ${column} ${sort}
         </if>
 	</select>
+	<select id="findAllRisk" resultType="cn.edu.tju.bigdata.entity.RiskFormMap">
+		select
+		id,
+		name,
+		classification,
+		critical_discharge
+		from ly_dangerouschemicals
+		where 1 = 1
+	</select>
 	
 </mapper>

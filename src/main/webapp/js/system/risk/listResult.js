@@ -8,23 +8,31 @@ $(function() {
             colkey : "id",
             name : "id",
         }, {
-            colkey : "name",
-            name : "名称",
+            colkey : "accountName",
+            name : "用户",
+        }, {
+            colkey : "standard_num",
+            name : "合格数",
             isSort:true,
         }, {
-            colkey : "classification",
-            name : "类别",
+            colkey : "unstandard_num",
+            name : "不合格数",
             isSort:true,
         }, {
-            colkey : "critical_discharge",
-            name : "限额"
+            colkey : "evaluate_date",
+            name : "评估时间",
+			isSort:true,
+			renderData : function(rowindex,data, rowdata, column) {
+				return new Date(data).format("yyyy-MM-dd hh:mm:ss");
+			}
         }, {
-            name : "操作",
+            name : "查看详情",
             renderData : function( rowindex ,data, rowdata, colkeyn) {
                 return "测试渲染函数";
+            	//return "<a herf=" + rootPath + '/risk/toAddQuotaPage.shtml'+ ">查看详情</a>";
             }
         } ],
-        jsonUrl : rootPath + '/risk/findByPage.shtml',
+        jsonUrl : rootPath + '/risk/findResultByPage.shtml',
         checkbox : true,
         serNumber : true
     });
@@ -35,27 +43,21 @@ $(function() {
         });
     });
 
-    $("#addFun").click("click", function() {
-    	pageii = layer.open({
-            title : "新增",
-            type : 2,
-            area : [ "600px", "80%" ],
-            content : rootPath + '/risk/toAddQuotaPage.shtml'
-        });
-    });
-    $("#editFun").click("click", function() {
+    
+    $("#viewDetail").click("click", function() {
     	var cbox = grid.getSelectedCheckbox();
-        if (cbox.length > 1 || cbox == "") {
+    	if (cbox.length > 1 || cbox == "") {
             layer.msg("只能选中一个");
             return;
         }
         pageii = layer.open({
-            title : "编辑",
+            title : "详情",
             type : 2,
-            area : [ "600px", "80%" ],
-            content : rootPath + '/risk/toEditQuotaPage.shtml?id=' + cbox
+            area : [ "80%", "90%" ],
+            content : rootPath + '/risk/toDetailPage.shtml?id=' + cbox
         });
-    })
+    });
+    
     $("#delFun").click("click", function() {
     	var cbox = grid.getSelectedCheckbox();
         if (cbox == "") {
@@ -63,7 +65,7 @@ $(function() {
             return;
         }
         layer.confirm('是否删除？', function(index) {
-            var url = rootPath + '/risk/doDeleteQuota.shtml';
+            var url = rootPath + '/risk/doDeleteEvaluate.shtml';
             var s = CommnUtil.ajax(url, {
                 ids : cbox.join(",")
             }, "json");
